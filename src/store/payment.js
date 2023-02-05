@@ -12,9 +12,42 @@ const state = {
 
 const getters = {};
 
-const actions = {};
+const actions = {
+  async getPayment({ commit }, id) {
+    commit("setLoading", true);
+    await axios
+      .get(Url + "/payments/" + id)
+      .then((response) => {
+        commit("setPayment", response.data.data);
+      })
+      .catch((err) => {
+        commit("setError", err);
+      })
+      .finally(() => {
+        commit("setLoading", false);
+      });
+  },
+  async postPayment({ commit }, payment) {
+    commit("setLoading", true);
+    await axios
+      .post(Url + "/payments", payment)
+      .then((response) => {
+        commit("setPayment", response.data.data);
+      })
+      .catch((err) => {
+        commit("setError", err);
+      })
+      .finally(() => {
+        commit("setLoading", false);
+      });
+  },
+};
 
-const mutations = {};
+const mutations = {
+  setPayment(state, payment) {
+    state.payment = payment;
+  },
+};
 
 export default {
   namespaced: true,

@@ -17,13 +17,15 @@
   </div>
 </template>
 <script setup>
-import { computed, onMounted } from "vue";
+import { computed, onMounted, reactive } from "vue";
 import { useStore } from "vuex";
 import EventCard from "../components/EventCard.vue";
 import LoadingComponent from "../components/LoadingComponent.vue";
 
 const store = useStore();
+
 const events = computed(() => store.state.events);
+
 onMounted(() => {
   store.dispatch("events/getEvents");
 });

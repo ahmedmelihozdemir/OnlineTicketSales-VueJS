@@ -1,8 +1,5 @@
 <template>
-  <header>
-    <div class=""></div>
-  </header>
-
+  <div></div>
   <RouterView />
 </template>
 <script setup></script>

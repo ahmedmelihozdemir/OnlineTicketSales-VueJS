@@ -55,8 +55,10 @@ const actions = {
       })
       .catch((err) => {
         commit("setError", err);
+      })
+      .finally(() => {
+        commit("setLoading", false);
       });
-    commit("setLoading", false);
   },
 
   async clearEvent({ commit }) {
@@ -67,17 +69,19 @@ const actions = {
 };
 
 const mutations = {
-  setLoading(state, status) {
-    state.eventLoading = status;
-  },
-
   setEvents(state, events) {
     state.events = events;
     console.log("da", state.events);
   },
+  setLoading(state, status) {
+    state.eventLoading = status;
+  },
 
   setEvent(state, event) {
     state.event = event;
+  },
+  setError(state, error) {
+    state.error = error;
   },
 };
 

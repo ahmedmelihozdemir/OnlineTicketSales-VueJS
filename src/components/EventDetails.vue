@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-red-100">
-    <HeaderComponent class=""/>
+  <div class="">
+    <HeaderComponent class="" />
     <div class="flex flex-row justify-center m-4">
       <div class="flex flex-col justify-center">
         <div class="m-4">
@@ -14,7 +14,7 @@
           >
             Daha fazla oku
           </button>
-          <p v-if="readMore">{{ event.description }}</p>
+          <p v-if="readMore" class="w-[480px] py-2">{{ event.description }}</p>
         </div>
         <div class="m-4">
           <p class="grid grid-cols-2">
@@ -27,10 +27,12 @@
           </p>
           <p class="grid grid-cols-2">
             <span class="text-xl font-semibold text-red-400"> Tarih:</span>
-            <span class="font-medium ml-4">{{ date }} </span>
+            <span class="font-medium ml-4"
+              >{{ date.toLocaleDateString() }}
+            </span>
           </p>
         </div>
-        <div class="">
+        <div class="mb-16">
           <h5 class="m-4 text-lg font-semibold">Liste</h5>
           <hr />
           <div class="grid grid-cols-5 m-4">
@@ -41,13 +43,13 @@
           </div>
           <hr />
           <div
-            class="grid grid-cols-5 gap-2 m-4"
+            class="grid grid-cols-5 gap-2 m-4 mb-8"
             v-for="catg in event.event_categories"
             :key="catg.id"
           >
             <div>{{ event.title }}</div>
             <div>{{ event.venue.name }}</div>
-            <div>{{}}</div>
+            <div>{{ date.toLocaleDateString() }}</div>
             <div class="flex flex-col">
               <span>{{ catg.name }}</span>
               <span>{{ catg.price }}£</span>
@@ -57,7 +59,7 @@
               @click="yaz(catg.id)"
             >
               <RouterLink
-                :to="`/seats/${event.id}?category=${catg.id}?price=${catg.price}`"
+                :to="`/seats/${event.id}?category=${catg.id}/?price=${catg.price}`"
               >
                 Satın Al
               </RouterLink>
