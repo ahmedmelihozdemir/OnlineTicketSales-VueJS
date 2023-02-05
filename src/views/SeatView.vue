@@ -11,7 +11,10 @@
             v-for="col in seatCols"
             :class="seatStatus(row, col)"
             :key="col"
-            @click="toggleSeat(row, col)"
+            @click="
+              toggleSeat(row, col);
+              getPrice(row, col);
+            "
           ></div>
         </div>
       </div>
@@ -28,12 +31,9 @@
       </div>
       <h1 v-if="bought">Sipariş için teşekkürler!</h1>
       <div class="btn__container" v-else>
-        <h2 class="m-2">{{ `Toplam: ${selectedSeats.length * 100} £.` }}</h2>
-        <button
-          class="m-2 bg-blue-500 p-2 rounded-md"
-          @click.prevent="reserveSeats"
-        >
-          <RouterLink :to="`/payment/${1}`"> Satın Al</RouterLink>
+        <h2 class="m-2">{{ `Toplam: ${price} £.` }}</h2>
+        <button class="m-2 bg-blue-500 p-2 rounded-md" @click="reserveSeats">
+          <RouterLink :to="`/payment/${price}`"> Satın Al</RouterLink>
         </button>
         <button
           class="m-2 bg-blue-500 p-2 rounded-md"
@@ -44,20 +44,29 @@
         <button class="m-2 bg-blue-500 p-2 rounded-md">
           <router-link to="/">Geri dön</router-link>
         </button>
-        <button class="m-2 bg-blue-500 p-2 rounded-md" @click="routee">
+        <!-- <button
+          class="m-2 bg-blue-500 p-2 rounded-md"
+          @click.prevent="randomSelection(row, col)"
+        >
           Route
-        </button>
+        </button> -->
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import router from "../router";
 export default {
+  props: {
+    events: {
+      type: String,
+      required: true,
+    },
+  },
   name: "seat-map",
   data() {
     return {
+      price: 0,
       seatRows: 10,
       seatCols: 10,
       reservedSeats: [
@@ -74,7 +83,6 @@ export default {
       ],
       selectedSeats: [],
       bought: false,
-      route: router,
     };
   },
   methods: {
@@ -119,9 +127,24 @@ export default {
     resetSeats() {
       this.selectedSeats = [];
     },
-
-    routee() {
-      this.route.fullPath;
+    randomSelection(row, col) {
+      const seatId = `${row}.${col}`;
+      const seat = this.seatStatus(row, col);
+      this.bought = false;
+      if (!seat.reserved) {
+        if (seat.selected) {
+          const index = this.selectedSeats.indexOf(seatId);
+          this.selectedSeats.splice(index, 1);
+        } else {
+          this.selectedSeats.push(seatId);
+        }
+        console.log(this.$route.query.category.split("=")[1]);
+      }
+    },
+    getPrice() {
+      this.price = this.$route.query.category.split("=")[1];
+      console.log(this.price);
+      this.price = this.price * this.selectedSeats.length;
     },
   },
 };

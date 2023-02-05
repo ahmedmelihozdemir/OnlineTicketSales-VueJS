@@ -1,11 +1,11 @@
 import axios from "axios";
-const baseUrl = "https://d706d748-0586-4c2b-9d30-288f5d3b0630.mock.pstmn.io";
+const Url = "https://d706d748-0586-4c2b-9d30-288f5d3b0630.mock.pstmn.io";
 
 const state = {
   events: [],
   event: null,
-  eventLoading: false,
   error: null,
+  eventLoading: false,
 };
 
 const getters = {
@@ -19,7 +19,7 @@ const actions = {
   async getEvents({ commit }) {
     commit("setLoading", true);
     await axios
-      .get(baseUrl + "/events")
+      .get(Url + "/events")
       .then((response) => {
         commit("setEvents", response.data.data);
         console.log(response.data.data);
@@ -35,7 +35,7 @@ const actions = {
   /* async getEvents({ commit }) {
     commit("setLoading", true);
     try {
-      const data = await axios.get(baseUrl + "/events");
+      const data = await axios.get(Url + "/events");
       commit("setEvents", data.data.data);
     } catch (error) {
       commit("setError", error);
@@ -49,7 +49,7 @@ const actions = {
   async getEventById({ commit }, id) {
     commit("setLoading", true);
     await axios
-      .get(baseUrl + "/events/" + id)
+      .get(Url + "/events/" + id)
       .then((response) => {
         commit("setEvent", response.data.data);
       })
@@ -73,15 +73,11 @@ const mutations = {
 
   setEvents(state, events) {
     state.events = events;
-    console.log("da",state.events);
+    console.log("da", state.events);
   },
 
   setEvent(state, event) {
     state.event = event;
-  },
-
-  setError(state, error) {
-    state.error = error;
   },
 };
 

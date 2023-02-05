@@ -1,9 +1,9 @@
 <template>
-  <div class="px-2 sm:px-6 lg:px-20 2xl:px-80 py-6">
+  <div class="">
     <LoadingComponent v-if="events.eventLoading" />
     <EventDetails
-      v-else-if="!events.eventLoading && events.event"
-      :event="events.event"
+    v-else-if="!events.eventLoading && events.event"
+    :event="events.event"
     />
   </div>
 </template>
