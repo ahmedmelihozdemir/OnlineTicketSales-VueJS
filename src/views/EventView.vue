@@ -33,19 +33,3 @@ export default {
 };
 </script>
 
-<!-- <script setup>
-import { useStore } from "vuex";
-import { useRoute } from "vue-router";
-import { computed, onUnmounted } from "vue";
-import EventDetails from "../components/EventDetails.vue";
-import LoadingComponent from "../components/LoadingComponent.vue";
-
-const route = useRoute();
-const store = useStore();
-const events = computed(() => store.state.events);
-store.dispatch("events/getEventById", route.params.id);
-
-onUnmounted(() => {
-  store.dispatch("events/clearEvent");
-});
-</script> -->
