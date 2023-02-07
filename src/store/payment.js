@@ -13,20 +13,6 @@ const state = {
 const getters = {};
 
 const actions = {
-  async getPayment({ commit }, id) {
-    commit("setLoading", true);
-    await axios
-      .get(Url + "/payments/" + id)
-      .then((response) => {
-        commit("setPayment", response.data.data);
-      })
-      .catch((err) => {
-        commit("setError", err);
-      })
-      .finally(() => {
-        commit("setLoading", false);
-      });
-  },
   async postPayment({ commit }, payment) {
     commit("setLoading", true);
     await axios

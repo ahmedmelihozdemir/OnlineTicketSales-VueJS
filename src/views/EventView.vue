@@ -2,8 +2,8 @@
   <div class="">
     <LoadingComponent v-if="events.eventLoading" />
     <EventDetails
-    v-else-if="!events.eventLoading && events.event"
-    :event="events.event"
+      v-else-if="!events.eventLoading && events.event"
+      :event="events.event"
     />
   </div>
 </template>
@@ -13,10 +13,10 @@ import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import { computed } from "vue";
 import EventDetails from "../components/EventDetails.vue";
-import LoadingComponent from "../components/LoadingComponent.vue";
+import LoadingComponent from "../components/layout/LoadingComponent.vue";
 
 export default {
-  components: { EventDetails,  LoadingComponent },
+  components: { EventDetails, LoadingComponent },
   setup() {
     const route = useRoute();
     const store = useStore();
@@ -31,7 +31,7 @@ export default {
     store.dispatch("events/clearEvent");
   },
 };
-</script> 
+</script>
 
 <!-- <script setup>
 import { useStore } from "vuex";

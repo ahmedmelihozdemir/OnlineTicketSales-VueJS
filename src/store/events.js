@@ -18,22 +18,6 @@ const getters = {
 const actions = {
   async getEvents({ commit }) {
     commit("setLoading", true);
-    await axios
-      .get(Url + "/events")
-      .then((response) => {
-        commit("setEvents", response.data.data);
-        console.log(response.data.data);
-      })
-      .catch((err) => {
-        commit("setError", err);
-      })
-      .finally(() => {
-        commit("setLoading", false);
-      });
-  },
-
-  /* async getEvents({ commit }) {
-    commit("setLoading", true);
     try {
       const data = await axios.get(Url + "/events");
       commit("setEvents", data.data.data);
@@ -44,7 +28,7 @@ const actions = {
     } finally {
       commit("setLoading", false);
     }
-  }, */
+  },
 
   async getEventById({ commit }, id) {
     commit("setLoading", true);
@@ -71,7 +55,7 @@ const actions = {
 const mutations = {
   setEvents(state, events) {
     state.events = events;
-    console.log("da", state.events);
+    console.log("Events length:", state.events.length);
   },
   setLoading(state, status) {
     state.eventLoading = status;

@@ -32,18 +32,37 @@
       <h1 v-if="bought">Sipariş için teşekkürler!</h1>
       <div class="btn__container" v-else>
         <h2 class="m-2">{{ `Toplam: ${price} £.` }}</h2>
-        <button class="m-2 bg-blue-500 p-2 rounded-md" @click="reserveSeats">
-          <RouterLink :to="`/payment/${price}`"> Satın Al</RouterLink>
+        <!-- <RouterLink :to="`/payment/?price=${price}/?seats=${seats}`"> -->
+        <RouterLink :to="`/payment/?price=${price}/?seats=${seats}`">
+          <button
+            class="m-2 bg-blue-500 p-2 rounded-md hover:bg-blue-600"
+            @click="
+              () => {
+                reserveSeats();
+                submit();
+              }
+            "
+          >
+            Satın Al
+          </button>
+        </RouterLink>
+        <button
+          class="m-2 bg-blue-500 p-2 rounded-md hover:bg-blue-600"
+          @click="submit"
+        >
+          Submit
         </button>
         <button
-          class="m-2 bg-blue-500 p-2 rounded-md"
+          class="m-2 bg-red-500 p-2 rounded-md hover:bg-red-600"
           @click.prevent="resetSeats"
         >
           İptal et
         </button>
-        <button class="m-2 bg-blue-500 p-2 rounded-md">
-          <router-link to="/">Geri dön</router-link>
-        </button>
+        <router-link to="/">
+          <button class="m-2 bg-yellow-500 p-2 rounded-md hover:bg-yellow-600">
+            Anasayfaya Geri dön
+          </button>
+        </router-link>
         <!-- <button
           class="m-2 bg-blue-500 p-2 rounded-md"
           @click.prevent="randomSelection(row, col)"
@@ -67,6 +86,7 @@ export default {
   data() {
     return {
       price: 0,
+      seats: [],
       seatRows: 10,
       seatCols: 10,
       reservedSeats: [
@@ -143,8 +163,15 @@ export default {
     },
     getPrice() {
       this.price = this.$route.query.category.split("=")[1];
-      console.log(this.price);
       this.price = this.price * this.selectedSeats.length;
+      this.seats = this.selectedSeats;
+    },
+    submit() {
+      /* console.log("selected seats", this.selectedSeats.concat(this.seats));
+      console.log("route", this.$route.query.category.split("=")[1]);
+      console.log("asdddd", this.$route.query); */
+      /* this.seats = this.seats.push(this.selectedSeats); */
+      this.seats = this.selectedSeats;
     },
   },
 };
